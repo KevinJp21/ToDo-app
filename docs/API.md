@@ -133,7 +133,7 @@ Authorization: Bearer {token}
 }
 ```
 
-### 1. Crear Tarea
+### 2. Obtener Tareas
 **GET** `/api/tasks`
 
 Obtiene la lista de todas las tareas asociadas al usuario autenticado.
@@ -178,5 +178,43 @@ Respuesta exitosa (200):
 {
     "success": false,
     "message": "No autorizado"
+}
+```
+
+### 3. Obtener Tarea por ID
+**GET** `/api/tasks/{id}`
+
+Obtiene los detalles de una tarea específica asociada al usuario autenticado.
+
+**Headers requeridos:**
+```
+Authorization: Bearer {token}
+```
+**Parámetros de ruta:**
+- `id` (integer, requerido): ID de la tarea a obtener.
+
+**Respuesta exitosa (200):**
+```json
+{
+     "success": true,
+    "message": "Tarea obtenida correctamente",
+    "data": {
+        "id": 1,
+        "title": "Comprar comida para desayuno",
+        "description": "Leche, pan y huevos",
+        "completed": false,
+        "finish_date": null,
+        "user_id": 1,
+        "created_at": "2025-08-15T03:12:24.000000Z",
+        "updated_at": "2025-08-15T03:12:24.000000Z"
+    }
+}
+```
+
+**Tarea no encontrada (404):**
+```json
+{
+    "success": false,
+    "message": "Tarea no encontrada"
 }
 ```

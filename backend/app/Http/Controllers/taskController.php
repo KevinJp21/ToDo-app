@@ -51,4 +51,26 @@ class taskController extends Controller
             'data' => $tasks
         ], 200);
     }
+
+    // Obtener tarea del usaurio logeado por ID
+    public function show(Request $request, $id)
+    {
+        // Buscar tarea por id y user_id (token)
+        $task = Task::where('id', $id)
+            ->where('user_id', $request->user()->id)
+            ->first();
+
+        if (!$task) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Tarea no encontrada'
+            ], 404);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Tarea obtenida correctamente',
+            'data' => $task
+        ], 200);
+    }
 }
