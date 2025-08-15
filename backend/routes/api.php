@@ -12,4 +12,7 @@ Route::post('/login', [userController::class, 'login']);
 // Rutas protegidas (requieren autenticación)
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [userController::class, 'logout']);
+
+    //Rutas CRUD de Tareas
+    Route::post('/tasks', [taskController::class, 'store']);
 });

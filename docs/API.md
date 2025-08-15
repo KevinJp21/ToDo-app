@@ -84,3 +84,51 @@ Authorization: Bearer {token}
 ```
 
 ## Endpoints de entidad tasks
+
+### 1. Crear Tarea
+**POST** `/api/tasks`
+
+Crea una nueva tarea asociada a un usuario.
+
+**Headers requeridos:**
+```
+Authorization: Bearer {token}
+```
+
+**Datos requeridos:**
+```json
+{
+    "title": "Comprar comida para desayuno",
+    "description": "Leche, pan y huevos"
+}
+```
+
+**Respuesta exitosa (201):**
+```json
+{
+   {
+    "success": true,
+    "message": "Tarea creada correctamente",
+    "data": {
+        "title": "Comprar comida para desayuno",
+        "description": "Leche, pan y huevos",
+        "finish_date": null,
+        "user_id": 1,
+        "updated_at": "2025-08-15T03:12:24.000000Z",
+        "created_at": "2025-08-15T03:12:24.000000Z",
+        "id": 1
+    }
+}
+}
+```
+**Errores de validación (422):**
+```json
+{
+    "success": false,
+    "message": "Error de validación",
+    "errors": {
+        "title": ["El campo título es obligatorio"],
+        "user_id": ["El campo user_id es obligatorio"]
+    }
+}
+```
