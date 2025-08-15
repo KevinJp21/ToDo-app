@@ -10,6 +10,7 @@ import NewTaskCard from "@/components/NewTaskCard";
 import { getTasks, Task } from "@/services/taskService";
 import { useState, useEffect } from "react";
 import { Alert } from "react-native";
+import { deleteTask } from "@/services/taskService";
 
 
 export default function Dashboard() {
@@ -31,6 +32,16 @@ export default function Dashboard() {
 
         fetchTasks();
     }, []);
+
+    const handleDeleteTask = async (id: number) => {
+        try {
+            await deleteTask(id);
+            setTasks((prev) => prev.filter((task) => task.id !== id));
+        } catch (error: any) {
+            Alert.alert("Error", error.message || "No se pudo eliminar la tarea");
+        }
+    };
+
     return (
         <View style={{ flex: 1 }}>
             <Head>
@@ -139,11 +150,13 @@ export default function Dashboard() {
                         tasks.map(task => (
                             <TaskCard
                                 key={task.id}
+                                id={task.id}
                                 title={task.title}
-                                description={task.description || ''}
-                                completed={task.completed}
-                                created_at={new Date(task.created_at).toLocaleDateString()}
-                                updated_at={new Date(task.updated_at).toLocaleDateString()}
+                                description={task.description || ""}
+                                completed={task.completed || false}
+                                created_at={task.created_at}
+                                updated_at={task.updated_at}
+                                onDelete={handleDeleteTask}
                             />
                         ))
                     )}
