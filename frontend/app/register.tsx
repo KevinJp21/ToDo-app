@@ -33,6 +33,8 @@ export default function Register() {
         }
     }
 
+
+
     return (
         <View style={{ flex: 1 }}>
             <Head>
@@ -50,7 +52,7 @@ export default function Register() {
                             colors={["#6366F1", "#7C3AED"]}
                             start={{ x: 0, y: 0.5 }}
                             end={{ x: 1, y: 0.5 }}
-                            style={{ width: 64, height: 64, borderRadius: 16, marginBottom: 16, alignSelf: "center", justifyContent: "center", alignItems: "center" }}
+                            style={{ width: 64, height: 64, borderRadius: 100, marginBottom: 16, alignSelf: "center", justifyContent: "center", alignItems: "center" }}
                         >
                             <ToDoLogo width={32} height={32} fill="none" stroke="#fff" />
                         </LinearGradient>
@@ -121,7 +123,7 @@ export default function Register() {
 
                             <Text className="text-gary-700 mt-4 text-sm ">
                                 ¿Ya tienes una cuenta?
-                                <Link href="/register" className="underline cursor-pointer"> Inicia sesión</Link>
+                                <Link href="/" className="underline cursor-pointer"> Inicia sesión</Link>
                             </Text>
 
                             <LinearGradient
