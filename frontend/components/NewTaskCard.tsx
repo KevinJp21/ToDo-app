@@ -1,9 +1,13 @@
 import { useState } from "react";
 import { View, Text, TextInput, Pressable, Alert } from "react-native";
-import { createTask, TaskData } from "@/services/taskService";
+import { createTask, TaskData, Task } from "@/services/taskService";
 import PlusIcon from "../assets/icons/plus.svg";
 
-export default function NewTaskCard() {
+type Props = {
+  setTasks: React.Dispatch<React.SetStateAction<Task[]>>; // Recibimos setTasks de Dashboard
+};
+
+export default function NewTaskCard({ setTasks }: Props) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
@@ -21,6 +25,9 @@ export default function NewTaskCard() {
       Alert.alert("Éxito", "Tarea creada correctamente");
       setTitle("");
       setDescription("");
+
+      // Actualizamos el estado en Dashboard
+      setTasks(prev => [created, ...prev]);
     } catch (error: any) {
       Alert.alert("Error", error.message || "No se pudo crear la tarea");
     } finally {

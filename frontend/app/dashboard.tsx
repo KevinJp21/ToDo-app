@@ -42,6 +42,11 @@ export default function Dashboard() {
         }
     };
 
+    // Estadisticas
+    const totalTasks = tasks.length;
+    const pendingTasks = tasks.filter(task => !task.completed).length;
+    const completedTasks = tasks.filter(task => task.completed).length;
+
     return (
         <View style={{ flex: 1 }}>
             <Head>
@@ -94,7 +99,7 @@ export default function Dashboard() {
                         <View className="flex-row justify-between items-center">
                             <View>
                                 <Text className="text-gray-600 text-sm">Total</Text>
-                                <Text className="text-2xl font-bold text-gray-900">3</Text>
+                                <Text className="text-2xl font-bold text-gray-900">{totalTasks}</Text>
                             </View>
                             <LinearGradient colors={["#6366F1", "#7C3AED"]}
                                 start={{ x: 0, y: 0.5 }}
@@ -111,7 +116,7 @@ export default function Dashboard() {
                         <View className="flex-row justify-between items-center">
                             <View>
                                 <Text className="text-gray-600 text-sm">Pendientes</Text>
-                                <Text className="text-2xl font-bold text-gray-900">3</Text>
+                                <Text className="text-2xl font-bold text-gray-900">{pendingTasks}</Text>
                             </View>
                             <LinearGradient colors={["#3b82f6", "#0891b2"]}
                                 start={{ x: 0, y: 0.5 }}
@@ -128,7 +133,7 @@ export default function Dashboard() {
                         <View className="flex-row justify-between items-center">
                             <View>
                                 <Text className="text-gray-600 text-sm">Completadas</Text>
-                                <Text className="text-2xl font-bold text-gray-900">1</Text>
+                                <Text className="text-2xl font-bold text-gray-900">{completedTasks}</Text>
                             </View>
                             <LinearGradient colors={["#22c55e", "#059669"]}
                                 start={{ x: 0, y: 0.5 }}
@@ -143,7 +148,7 @@ export default function Dashboard() {
 
                 {/* Lista de tareas */}
                 <View className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <NewTaskCard />
+                    <NewTaskCard setTasks={setTasks}/>
                     {loading ? (
                         <Text>Loading tasks...</Text>
                     ) : (
