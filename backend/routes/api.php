@@ -7,3 +7,4 @@ use App\Http\Controllers\userController;
 
 // Rutas públicas (sin autenticación)
 Route::post('/register', [userController::class, 'register']);
+Route::post('/login', [userController::class, 'login']);
