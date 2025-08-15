@@ -67,7 +67,7 @@ export default function index() {
 
                     <View className="bg-white/80 rounded-2xl shadow-xl border border-white/20 p-8">
                         <View className="space-y-6">
-                        {errors.message && (
+                            {errors.message && (
                                 <Text className="text-red-500 text-xl mt-2 text-center">
                                     {errors.message}
                                 </Text>
@@ -120,9 +120,6 @@ export default function index() {
                                     <Text className="text-white text-center font-medium">Iniciar sesión</Text>
                                 </Pressable>
                             </LinearGradient>
-                            <Link href="/dashboard">
-                                    Dashboard
-                                </Link>
                         </View>
                     </View>
                 </View>

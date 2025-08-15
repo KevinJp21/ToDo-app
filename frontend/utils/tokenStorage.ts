@@ -19,3 +19,11 @@ export async function getToken(): Promise<string | null> {
     return await SecureStore.getItemAsync("token");
   }
 }
+
+export async function destroyToken() {
+  if (Platform.OS === "web") {
+    Cookies.remove("token");
+  } else {
+    await SecureStore.deleteItemAsync("token");
+  }
+}

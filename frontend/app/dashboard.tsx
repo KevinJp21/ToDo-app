@@ -1,8 +1,8 @@
-import { View, Text, Pressable, TextInput, ScrollView } from "react-native"
+import { View, Text, Pressable, ScrollView } from "react-native"
+import { router } from "expo-router";
 import { LinearGradient } from "expo-linear-gradient";
 import TagIcon from '../assets/icons/tag.svg'
 import CheckCircleIcon from '../assets/icons/check.svg'
-import PlusIcon from '../assets/icons/plus.svg'
 import PlayIcon from '../assets/icons/play.svg'
 import Head from "expo-router/head";
 import TaskCard from "@/components/TaskCard";
@@ -11,6 +11,7 @@ import { getTasks, Task } from "@/services/taskService";
 import { useState, useEffect } from "react";
 import { Alert } from "react-native";
 import { deleteTask } from "@/services/taskService";
+import { logOut } from "@/services/auth";
 
 
 export default function Dashboard() {
@@ -42,6 +43,19 @@ export default function Dashboard() {
         }
     };
 
+    const handleLogOut = async () => {
+        try {
+            setLoading(true);
+            await logOut(); // calls your API and removes token
+            router.replace("/"); // redirect to login
+        } catch (error: any) {
+            Alert.alert("Error", error.message || "Failed to log out");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+
     // Estadisticas
     const totalTasks = tasks.length;
     const pendingTasks = tasks.filter(task => !task.completed).length;
@@ -53,17 +67,14 @@ export default function Dashboard() {
                 <title>Dashboard - ToDo</title>
             </Head>
             <ScrollView className="w-full px-4 py-8 min-h-screen transition-colors duration-300 bg-gray-50">
+                <Pressable className="flex-row justify-center items-center bg-indigo-500 px-4 py-2 rounded-lg my-4" onPress={handleLogOut}>
+                    <Text className="text-white font-medium">
+                        {loading ? "Cerrando sesión" : "Cerrar sesión"}
+                    </Text>
+                </Pressable>
                 {/* Barra superior */}
                 <View className="flex flex-col sm:flex-row gap-4 mb-8 items-center justify-between">
                     <View className="flex flex-col sm:flex-row gap-4">
-                        {/* Input de búsqueda */}
-                        <View className="relative">
-                            <TextInput
-                                placeholder="Buscar tareas..."
-                                className="px-4 py-2 rounded-lg border bg-white border-gray-200 text-gray-900 placeholder-gray-500 w-64"
-                            />
-                        </View>
-
                         {/* Filtros */}
                         <View className="flex flex-row space-x-2">
                             <Pressable className="px-4 py-2 rounded-lg bg-indigo-500 shadow-lg">
@@ -77,19 +88,6 @@ export default function Dashboard() {
                             </Pressable>
                         </View>
                     </View>
-
-                    {/* Botón nueva tarea */}
-                    <LinearGradient colors={["#6366F1", "#7C3AED"]}
-                        start={{ x: 0, y: 0.5 }}
-                        end={{ x: 1, y: 0.5 }}
-                        style={{ borderRadius: 5 }}
-                        className="px-6 py-2">
-                        <Pressable className="flex flex-row items-center">
-                            <PlusIcon stroke="#fff" />
-                            <Text className="text-white font-medium text-base">Nueva tarea</Text>
-                        </Pressable>
-                    </LinearGradient>
-
                 </View>
 
                 {/* Estadísticas */}
@@ -148,7 +146,7 @@ export default function Dashboard() {
 
                 {/* Lista de tareas */}
                 <View className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <NewTaskCard setTasks={setTasks}/>
+                    <NewTaskCard setTasks={setTasks} />
                     {loading ? (
                         <Text>Loading tasks...</Text>
                     ) : (
