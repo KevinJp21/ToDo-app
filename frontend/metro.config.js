@@ -1,16 +1,23 @@
-const { getDefaultConfig } = require("expo/metro-config");
-const { withNativeWind } = require("nativewind/metro");
+// metro.config.js
+const { getDefaultConfig } = require('expo/metro-config');
+const { withNativeWind } = require('nativewind/metro');
 
 const config = getDefaultConfig(__dirname);
 
-// Configuración para importar SVG
+// ← transformer para SVG
 config.transformer = {
-  babelTransformerPath: require.resolve("react-native-svg-transformer"),
-};
-config.resolver = {
-  assetExts: config.resolver.assetExts.filter(ext => ext !== "svg"),
-  sourceExts: [...config.resolver.sourceExts, "svg"],
+  ...config.transformer,
+  babelTransformerPath: require.resolve('react-native-svg-transformer'),
 };
 
-// Integrar NativeWind
-module.exports = withNativeWind(config, { input: "./global.css" });
+// ← resolver para SVG
+config.resolver = {
+  ...config.resolver,
+  assetExts: config.resolver.assetExts.filter((ext) => ext !== 'svg'),
+  sourceExts: [...config.resolver.sourceExts, 'svg'],
+};
+
+// ← aplicar NativeWind indicándole tu archivo de estilos (global.css)
+module.exports = withNativeWind(config, {
+  input: './global.css',
+});
