@@ -6,7 +6,10 @@ import PlusIcon from '../assets/icons/plus.svg'
 import PlayIcon from '../assets/icons/play.svg'
 import Head from "expo-router/head";
 import TaskCard from "@/components/TaskCard";
+import NewTaskCard from "@/components/NewTaskCard";
+
 export default function Dashboard() {
+    
     return (
         <View style={{ flex: 1 }}>
             <Head>
@@ -108,6 +111,7 @@ export default function Dashboard() {
 
                 {/* Lista de tareas */}
                 <View className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <NewTaskCard />
                     <TaskCard
                         title="Configurar base de datos"
                         description="Crear migrations y modelos"
