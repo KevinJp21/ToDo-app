@@ -73,4 +73,44 @@ class taskController extends Controller
             'data' => $task
         ], 200);
     }
+
+    // Actualizar tarea de un usuario logeado
+    public function update(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'title' => 'sometimes|required|string|max:255',
+            'description' => 'sometimes|nullable|string',
+            'finish_date' => 'sometimes|nullable|date',
+            'completed' => 'sometimes|boolean',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error de validación',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        // Obtener tarea y validar propiedad del usuario
+        $task = Task::where('id', $id)
+            ->where('user_id', $request->user()->id)
+            ->first();
+
+        if (!$task) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Tarea no encontrada'
+            ], 404);
+        }
+
+        // Actualizar campos
+        $task->update($request->only(['title', 'description', 'finish_date', 'completed']));
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Tarea actualizada correctamente',
+            'data' => $task
+        ], 200);
+    }
 }

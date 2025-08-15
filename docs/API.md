@@ -218,3 +218,63 @@ Authorization: Bearer {token}
     "message": "Tarea no encontrada"
 }
 ```
+
+### 4. Actualizar Tarea
+**PUT** `/api/tasks/{id}`
+
+Actualiza los campos de una tarea específica del usuario autenticado.
+
+**Headers requeridos:**
+```
+Authorization: Bearer {token}
+```
+
+
+**Datos opcionales (puedes enviar uno o varios):**
+```json
+{
+    "title": "Nuevo título de la tarea",
+    "description": "Nueva descripción",
+    "finish_date": "2025-08-20",
+    "completed": true
+}
+```
+
+**Respuesta exitosa (200):**
+```json
+{
+    "success": true,
+    "message": "Tarea actualizada correctamente",
+    "data": {
+        "id": 1,
+        "title": "Nuevo título de la tarea",
+        "description": "Nueva descripción",
+        "completed": true,
+        "finish_date": "2025-08-20",
+        "user_id": 1,
+        "created_at": "2025-08-15T03:12:24.000000Z",
+        "updated_at": "2025-08-15T03:34:03.000000Z"
+    }
+}
+```
+
+**Tarea no encontrada (404):**
+```json
+{
+    "success": false,
+    "message": "Tarea no encontrada"
+}
+```
+
+**Errores de validación (422):**
+```json
+{
+    "success": false,
+    "message": "Error de validación",
+    "errors": {
+        "title": [
+            "The title field is required."
+        ]
+    }
+}
+```
