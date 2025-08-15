@@ -7,6 +7,15 @@ export interface TaskData {
   finish_date?: string | null;
 }
 
+export interface Task extends TaskData {
+    id: number;
+    completed: boolean;
+    user_id: number;
+    created_at: string;
+    updated_at: string;
+  }
+  
+
 export async function createTask(task: TaskData) {
   try {
     const token = await getToken();
@@ -33,3 +42,28 @@ export async function createTask(task: TaskData) {
     throw error;
   }
 }
+
+export async function getTasks(): Promise<Task[]> {
+    try {
+      const token = await getToken();
+      if (!token) throw new Error('No se encontró el token de usuario');
+  
+      const response = await fetch(`${getApiUrl()}/api/tasks`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+  
+      const data = await response.json();
+  
+      if (!response.ok) {
+        throw new Error(data.message || 'Error al obtener las tareas');
+      }
+  
+      return data.data; // retorna la lista de tareas
+    } catch (error: any) {
+      console.error('Error getTasks:', error.message || error);
+      throw error;
+    }
+  }

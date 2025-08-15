@@ -7,9 +7,30 @@ import PlayIcon from '../assets/icons/play.svg'
 import Head from "expo-router/head";
 import TaskCard from "@/components/TaskCard";
 import NewTaskCard from "@/components/NewTaskCard";
+import { getTasks, Task } from "@/services/taskService";
+import { useState, useEffect } from "react";
+import { Alert } from "react-native";
+
 
 export default function Dashboard() {
-    
+    const [tasks, setTasks] = useState<Task[]>([]);
+    const [loading, setLoading] = useState<boolean>(true);
+
+    //Obtener Tareas
+    useEffect(() => {
+        const fetchTasks = async () => {
+            try {
+                const taskList = await getTasks();
+                setTasks(taskList);
+            } catch (error: any) {
+                Alert.alert('Error', error.message || 'No se pudo obtener las tareas');
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchTasks();
+    }, []);
     return (
         <View style={{ flex: 1 }}>
             <Head>
@@ -112,13 +133,20 @@ export default function Dashboard() {
                 {/* Lista de tareas */}
                 <View className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <NewTaskCard />
-                    <TaskCard
-                        title="Configurar base de datos"
-                        description="Crear migrations y modelos"
-                        completed={false}
-                        created_at="18/01/2025"
-                        updated_at="20/01/2025"
-                    />
+                    {loading ? (
+                        <Text>Loading tasks...</Text>
+                    ) : (
+                        tasks.map(task => (
+                            <TaskCard
+                                key={task.id}
+                                title={task.title}
+                                description={task.description || ''}
+                                completed={task.completed}
+                                created_at={new Date(task.created_at).toLocaleDateString()}
+                                updated_at={new Date(task.updated_at).toLocaleDateString()}
+                            />
+                        ))
+                    )}
                 </View>
             </ScrollView>
         </View>
