@@ -31,7 +31,9 @@ Laravel utiliza migraciones para crear y actualizar las tablas de la base de dat
 4. **Crear un modelo de tabla**:
    php artisan make:model <ModelName>
 5. **Sanctum** (para manejo de tokens de acceso personal):
-   php artisan vendor:publish --provider="Laravel\Sanctum\SanctumServiceProvider"
+```
+php artisan vendor:publish --provider="Laravel\Sanctum\SanctumServiceProvider"
+```
 
 Nota: Laravel agrega automáticamente mensajes de validación, por ejemplo:
 ["The password field must be at least 8 characters."]
@@ -48,8 +50,9 @@ DB_USERNAME=root
 DB_PASSWORD=
 
 ### Ejecutar servidor
+```
 composer run dev
-
+```
 El backend quedará disponible típicamente en http://127.0.0.1:8000.
 
 ---
@@ -65,12 +68,16 @@ El backend quedará disponible típicamente en http://127.0.0.1:8000.
 1. Entrar a la carpeta del frontend:
    cd frontend
 2. Instalar dependencias:
+```
    npm install
    o
    yarn install
+```
 
 ### Ejecutar la app
-expo start
+```
+npm run web
+```
 
 Esto abrirá el Expo Dev Tools en tu navegador y podrás correr la app en:
 - Emulador de iOS o Android
@@ -91,13 +98,23 @@ Esto abrirá el Expo Dev Tools en tu navegador y podrás correr la app en:
 ## Comandos útiles resumidos
 
 ### Backend
+```
 php artisan migrate:fresh
+```
+```
 php artisan vendor:publish --provider="Laravel\Sanctum\SanctumServiceProvider"
+```
 
 ### Frontend
+```
 npm install
+```
+```
 yarn install
-expo start
+```
+```
+expo start o npx expo start (si no tienes el CLI de expo instalado)
+```
 
 ---
 
