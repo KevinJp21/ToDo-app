@@ -6,7 +6,6 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\Password;
 
@@ -95,13 +94,6 @@ class userController extends Controller
 
         // Intentar autenticar
         if (!Auth::attempt($request->only('email', 'password'))) {
-            // Debug: ver qué está pasando
-            Log::info('Login fallido', [
-                'email' => $request->email,
-                'password_provided' => $request->password,
-                'user_exists' => User::where('email', $request->email)->exists()
-            ]);
-            
             return response()->json([
                 'success' => false,
                 'message' => 'Credenciales inválidas'
