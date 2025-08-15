@@ -39,4 +39,16 @@ class taskController extends Controller
             'data' => $task
         ], 201);
     }
+
+    // Obtener tareas del usuario autenticado
+    public function index(Request $request)
+    {
+        $tasks = Task::where('user_id', $request->user()->id)->get();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Lista de tareas del usuario',
+            'data' => $tasks
+        ], 200);
+    }
 }

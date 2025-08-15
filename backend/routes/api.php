@@ -15,4 +15,5 @@ Route::middleware('auth:sanctum')->group(function () {
 
     //Rutas CRUD de Tareas
     Route::post('/tasks', [taskController::class, 'store']);
+    Route::get('/tasks', [taskController::class, 'index']);
 });

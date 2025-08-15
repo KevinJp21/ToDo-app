@@ -17,4 +17,8 @@ class Task extends Model
         'created_at',
         'updated_at'
     ];
+
+    protected $casts = [
+        'completed' => 'boolean',
+    ];
 }

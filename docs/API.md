@@ -132,3 +132,51 @@ Authorization: Bearer {token}
     }
 }
 ```
+
+### 1. Crear Tarea
+**GET** `/api/tasks`
+
+Obtiene la lista de todas las tareas asociadas al usuario autenticado.
+
+**Headers requeridos:**
+```
+Authorization: Bearer {token}
+```
+
+Respuesta exitosa (200):
+```json
+{
+    "success": true,
+    "message": "Lista de tareas del usuario",
+    "data": [
+        {
+            "id": 1,
+            "title": "Comprar comida para desayuno",
+            "description": "Leche, pan y huevos",
+            "completed": false,
+            "finish_date": null,
+            "user_id": 1,
+            "created_at": "2025-08-15T03:12:24.000000Z",
+            "updated_at": "2025-08-15T03:12:24.000000Z"
+        },
+        {
+            "id": 2,
+            "title": "Estudiar Laravel",
+            "description": "Repasar controladores y rutas",
+            "completed": true,
+            "finish_date": "2025-08-16",
+            "user_id": 1,
+            "created_at": "2025-08-14T11:20:00.000000Z",
+            "updated_at": "2025-08-14T12:00:00.000000Z"
+        }
+    ]
+}
+```
+
+**Errores de validación (401 Unauthorized):**
+```json
+{
+    "success": false,
+    "message": "No autorizado"
+}
+```
