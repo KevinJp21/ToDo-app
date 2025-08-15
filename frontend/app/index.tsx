@@ -5,7 +5,6 @@ import ToDoLogo from "../assets/logos/to-do-logo.svg";
 import { Link, router } from "expo-router";
 import { useState } from "react";
 import { loginUser } from "../services/auth";
-import * as SecureStore from 'expo-secure-store';
 import '../global.css'
 import { saveToken } from "../utils/tokenStorage";
 
@@ -28,7 +27,7 @@ export default function index() {
             await saveToken(response.data.token)
 
             console.log("Success: ", response.message);
-            router.push('/')
+            router.push('/dashboard')
         } catch (err: any) {
             // si err tiene "errors" => error por validación
             if (err.errors) {
@@ -121,6 +120,9 @@ export default function index() {
                                     <Text className="text-white text-center font-medium">Iniciar sesión</Text>
                                 </Pressable>
                             </LinearGradient>
+                            <Link href="/dashboard">
+                                    Dashboard
+                                </Link>
                         </View>
                     </View>
                 </View>
