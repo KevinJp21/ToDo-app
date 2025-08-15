@@ -1,10 +1,11 @@
+import { getApiUrl } from "../utils/getApiUrl";
 export async function registerUser(payload: {
     username: string;
     email: string;
     password: string;
     password_confirmation: string;
   }) {
-    const res = await fetch("http://127.0.0.1:8000/api/register", {
+    const res = await fetch(`${getApiUrl()}/api/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -26,7 +27,7 @@ export async function registerUser(payload: {
     email: string;
     password: string;
   }) {
-    const res = await fetch("http://127.0.0.1:8000/api/login", {
+    const res = await fetch(`${getApiUrl()}/api/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

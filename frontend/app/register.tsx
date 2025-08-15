@@ -4,7 +4,7 @@ import { Link, router } from "expo-router";
 import Head from "expo-router/head";
 import ToDoLogo from "../assets/logos/to-do-logo.svg";
 import { useState } from "react";
-import { registerUser } from "./services/auth";
+import { registerUser } from "../services/auth";
 import "../global.css";
 
 export default function Register() {

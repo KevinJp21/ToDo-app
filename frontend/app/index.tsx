@@ -4,10 +4,10 @@ import Head from "expo-router/head";
 import ToDoLogo from "../assets/logos/to-do-logo.svg";
 import { Link, router } from "expo-router";
 import { useState } from "react";
-import { loginUser } from "./services/auth";
+import { loginUser } from "../services/auth";
 import * as SecureStore from 'expo-secure-store';
 import '../global.css'
-import { saveToken } from "./utils/utils/tokenStorage";
+import { saveToken } from "../utils/tokenStorage";
 
 export default function index() {
 
