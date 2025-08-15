@@ -113,4 +113,26 @@ class taskController extends Controller
             'data' => $task
         ], 200);
     }
+
+    // Eliminar tarea de un usuario logeado
+    public function destroy(Request $request, $id)
+    {
+        $task = Task::where('id', $id)
+            ->where('user_id', $request->user()->id)
+            ->first();
+
+        if (!$task) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Tarea no encontrada'
+            ], 404);
+        }
+
+        $task->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Tarea eliminada correctamente'
+        ], 200);
+    }
 }

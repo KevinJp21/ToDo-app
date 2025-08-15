@@ -278,3 +278,41 @@ Authorization: Bearer {token}
     }
 }
 ```
+
+### 5. Eliminar Tarea
+**DELETE** `/api/tasks/{id}`
+
+Elimina una tarea específica asociada al usuario autenticado.
+
+**Headers requeridos:**
+```
+Authorization: Bearer {token}
+```
+
+**Parámetros de ruta:**
+- `id` (integer): ID de la tarea que se desea eliminar.
+
+**Respuesta exitosa (200):**
+```json
+{
+    "success": true,
+    "message": "Tarea eliminada correctamente"
+}
+```
+
+**Errores posibles:**
+
+- Tarea no encontrada (404):
+```json
+{
+    "success": false,
+    "message": "Tarea no encontrada"
+}
+```
+
+- Tarea no encontrada (404):
+```json
+{
+    "message": "Unauthenticated."
+}
+```
