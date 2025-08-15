@@ -1,11 +1,38 @@
 import { Text, View, TextInput, Pressable } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 import Head from "expo-router/head";
 import ToDoLogo from "../assets/logos/to-do-logo.svg";
+import { useState } from "react";
+import { registerUser } from "./services/auth";
 import "../global.css";
 
 export default function Register() {
+
+    //Crear Estados para almacenar los datos del formulario
+    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [passwordConfirm, setPasswordConfirm] = useState("");
+    const [errors, setErrors] = useState<any>({});
+
+    //Manejar envio de datos
+    async function handleSubmit() {
+        try {
+            const response = await registerUser({
+                username,
+                email,
+                password,
+                password_confirmation: passwordConfirm,
+            });
+
+            console.log("Success: ", response.message);
+            router.push('/')
+        } catch (errors) {
+            setErrors(errors);
+        }
+    }
+
     return (
         <View style={{ flex: 1 }}>
             <Head>
@@ -39,7 +66,14 @@ export default function Register() {
                                 <TextInput
                                     className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white/50 placeholder:text-gray-400"
                                     placeholder="Nombre de usuario"
+                                    value={username}
+                                    onChangeText={setUsername}
                                 />
+                                {errors.username && (
+                                    <Text className="text-red-500 text-xs mt-1 pl-1">
+                                        {errors.username[0]}
+                                    </Text>
+                                )}
                             </View>
 
                             <View className="mt-5">
@@ -48,7 +82,14 @@ export default function Register() {
                                     className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white/50 placeholder:text-gray-400"
                                     placeholder="tu@email.com"
                                     keyboardType="email-address"
+                                    value={email}
+                                    onChangeText={setEmail}
                                 />
+                                {errors.email && (
+                                    <Text className="text-red-500 text-xs mt-1">
+                                        {errors.email[0]}
+                                    </Text>
+                                )}
                             </View>
 
                             <View className="mt-5">
@@ -57,7 +98,14 @@ export default function Register() {
                                     className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white/50 placeholder:text-gray-400"
                                     placeholder="••••••••"
                                     secureTextEntry
+                                    value={password}
+                                    onChangeText={setPassword}
                                 />
+                                {errors.password && (
+                                    <Text className="text-red-500 text-xs mt-1">
+                                        {errors.password[0]}
+                                    </Text>
+                                )}
                             </View>
 
                             <View className="mt-5">
@@ -66,11 +114,13 @@ export default function Register() {
                                     className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white/50 placeholder:text-gray-400"
                                     placeholder="••••••••"
                                     secureTextEntry
+                                    value={passwordConfirm}
+                                    onChangeText={setPasswordConfirm}
                                 />
                             </View>
 
                             <Text className="text-gary-700 mt-4 text-sm ">
-                            ¿Ya tienes una cuenta?
+                                ¿Ya tienes una cuenta?
                                 <Link href="/register" className="underline cursor-pointer"> Inicia sesión</Link>
                             </Text>
 
@@ -81,7 +131,7 @@ export default function Register() {
                                 style={{ borderRadius: 12 }}
                                 className="mt-6"
                             >
-                                <Pressable className="w-full px-4 py-3 rounded-xl">
+                                <Pressable className="w-full px-4 py-3 rounded-xl" onPress={handleSubmit}>
                                     <Text className="text-white text-center font-medium">Comenzar mi productividad</Text>
                                 </Pressable>
                             </LinearGradient>
