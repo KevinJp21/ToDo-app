@@ -103,7 +103,7 @@ class userController extends Controller
         // Obtener usuario autenticado
         $user = User::where('email', $request->email)->firstOrFail();
 
-        // Revocar tokens anteriores (opcional)
+        // Revocar tokens anteriores
         $user->tokens()->delete();
 
         // Generar nuevo token
@@ -122,6 +122,27 @@ class userController extends Controller
                 'token_type' => 'Bearer'
             ]
         ], 200);
+    }
+
+      //Cerrar sesión y revocar token
+    public function logout(Request $request)
+    {
+        try {
+            // Revocar el token actual
+            $request->user()->currentAccessToken()->delete();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Sesión cerrada exitosamente'
+            ], 200);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error al cerrar sesión',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
 

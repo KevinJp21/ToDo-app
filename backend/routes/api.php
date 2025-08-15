@@ -8,3 +8,8 @@ use App\Http\Controllers\userController;
 // Rutas públicas (sin autenticación)
 Route::post('/register', [userController::class, 'register']);
 Route::post('/login', [userController::class, 'login']);
+
+// Rutas protegidas (requieren autenticación)
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/logout', [userController::class, 'logout']);
+});
